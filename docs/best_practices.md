@@ -199,16 +199,16 @@ For example, the name of the gralloc HAL module can be overridden by the
 `ro.hardware.gralloc` system property:
 
 ```
-# In hardware/acme/soc_a/gralloc/Android.mk:
+# In hardware/csc/soc_a/gralloc/Android.mk:
 ifeq ($(TARGET_BOARD_PLATFORM),soc_a)
-LOCAL_MODULE := gralloc.acme
+LOCAL_MODULE := gralloc.csc
 ...
 include $(BUILD_SHARED_LIBRARY)
 endif
 
-# In hardware/acme/soc_b/gralloc/Android.mk:
+# In hardware/csc/soc_b/gralloc/Android.mk:
 ifeq ($(TARGET_BOARD_PLATFORM),soc_b)
-LOCAL_MODULE := gralloc.acme
+LOCAL_MODULE := gralloc.csc
 ...
 include $(BUILD_SHARED_LIBRARY)
 endif
@@ -216,13 +216,13 @@ endif
 
 Becomes:
 ```
-# In hardware/acme/soc_a/gralloc/Android.bp:
+# In hardware/csc/soc_a/gralloc/Android.bp:
 cc_library {
     name: "gralloc.soc_a",
     ...
 }
 
-# In hardware/acme/soc_b/gralloc/Android.bp:
+# In hardware/csc/soc_b/gralloc/Android.bp:
 cc_library {
     name: "gralloc.soc_b",
     ...
@@ -260,7 +260,7 @@ include $(BUILD_SHARED_LIBRARY)
 Becomes:
 ```
 cc_library {
-    name: "gralloc.acme",
+    name: "gralloc.csc",
     ...
 }
 ```
@@ -269,8 +269,8 @@ Then to select the correct gralloc implementation, a product makefile should
 contain:
 
 ```
-PRODUCT_PACKAGES += gralloc.acme
-PRODUCT_PROPERTY_OVERRIDES += ro.hardware.gralloc=acme
+PRODUCT_PACKAGES += gralloc.csc
+PRODUCT_PROPERTY_OVERRIDES += ro.hardware.gralloc=csc
 ```
 
 ### Conditionally used source files, libraries or flags

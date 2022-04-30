@@ -56,9 +56,9 @@ func (t soongConfigTestModule) GenerateAndroidBuildActions(ModuleContext) {}
 func TestSoongConfigModule(t *testing.T) {
 	configBp := `
 		soong_config_module_type {
-			name: "acme_test",
+			name: "csc_test",
 			module_type: "test",
-			config_namespace: "acme",
+			config_namespace: "csc",
 			variables: ["board", "feature1", "FEATURE3", "unused_string_var"],
 			bool_variables: ["feature2", "unused_feature"],
 			value_variables: ["size", "unused_size"],
@@ -87,7 +87,7 @@ func TestSoongConfigModule(t *testing.T) {
 	importBp := `
 		soong_config_module_type_import {
 			from: "SoongConfig.bp",
-			module_types: ["acme_test"],
+			module_types: ["csc_test"],
 		}
 	`
 
@@ -97,7 +97,7 @@ func TestSoongConfigModule(t *testing.T) {
 			cflags: ["DEFAULT"],
 		}
 
-		acme_test {
+		csc_test {
 			name: "foo",
 			cflags: ["-DGENERIC"],
 			defaults: ["foo_defaults"],
@@ -148,7 +148,7 @@ func TestSoongConfigModule(t *testing.T) {
 			cflags: ["DEFAULT_B"],
 		}
 
-		acme_test {
+		csc_test {
 			name: "foo_with_defaults",
 			cflags: ["-DGENERIC"],
 			defaults: ["foo_defaults"],
@@ -196,7 +196,7 @@ func TestSoongConfigModule(t *testing.T) {
 			{
 				name: "withValues",
 				preparer: fixtureForVendorVars(map[string]map[string]string{
-					"acme": {
+					"csc": {
 						"board":    "soc_a",
 						"size":     "42",
 						"feature1": "true",
@@ -227,7 +227,7 @@ func TestSoongConfigModule(t *testing.T) {
 			{
 				name: "empty_prop_for_string_var",
 				preparer: fixtureForVendorVars(map[string]map[string]string{
-					"acme": {"board": "soc_c"}}),
+					"csc": {"board": "soc_c"}}),
 				fooExpectedFlags: []string{
 					"DEFAULT",
 					"-DGENERIC",
@@ -243,7 +243,7 @@ func TestSoongConfigModule(t *testing.T) {
 			{
 				name: "unused_string_var",
 				preparer: fixtureForVendorVars(map[string]map[string]string{
-					"acme": {"board": "soc_d"}}),
+					"csc": {"board": "soc_d"}}),
 				fooExpectedFlags: []string{
 					"DEFAULT",
 					"-DGENERIC",

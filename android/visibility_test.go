@@ -356,7 +356,7 @@ var visibilityTests = []struct {
 	
 				mock_library {
 					name: "libsamepackage",
-					visibility: ["//vendor/apps/AcmeSettings"],
+					visibility: ["//vendor/apps/CscSettings"],
 				}`),
 			"vendor/Blueprints": []byte(`
 				mock_library {
@@ -371,7 +371,7 @@ var visibilityTests = []struct {
 				}`),
 		},
 		expectedErrors: []string{
-			`module "libsamepackage": visibility: "//vendor/apps/AcmeSettings"` +
+			`module "libsamepackage": visibility: "//vendor/apps/CscSettings"` +
 				` is not allowed. Packages outside //vendor cannot make themselves visible to specific` +
 				` targets within //vendor, they can only use //vendor:__subpackages__.`,
 		},

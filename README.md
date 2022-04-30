@@ -419,9 +419,9 @@ modules that describe the module types, variables and possible values:
 
 ```
 soong_config_module_type {
-    name: "acme_cc_defaults",
+    name: "csc_cc_defaults",
     module_type: "cc_defaults",
-    config_namespace: "acme",
+    config_namespace: "csc",
     variables: ["board"],
     bool_variables: ["feature"],
     value_variables: ["width"],
@@ -434,7 +434,7 @@ soong_config_string_variable {
 }
 ```
 
-This example describes a new `acme_cc_defaults` module type that extends the
+This example describes a new `csc_cc_defaults` module type that extends the
 `cc_defaults` module type, with three additional conditionals based on
 variables `board`, `feature` and `width`, which can affect properties `cflags`
 and `srcs`. Additionally, each conditional will contain a `conditions_default`
@@ -451,30 +451,30 @@ used. To specify that no properties should be amended for `soc_b`, you can set
 
 The values of the variables can be set from a product's `BoardConfig.mk` file:
 ```
-SOONG_CONFIG_NAMESPACES += acme
-SOONG_CONFIG_acme += \
+SOONG_CONFIG_NAMESPACES += csc
+SOONG_CONFIG_csc += \
     board \
     feature \
     width \
 
-SOONG_CONFIG_acme_board := soc_a
-SOONG_CONFIG_acme_feature := true
-SOONG_CONFIG_acme_width := 200
+SOONG_CONFIG_csc_board := soc_a
+SOONG_CONFIG_csc_feature := true
+SOONG_CONFIG_csc_width := 200
 ```
 
-The `acme_cc_defaults` module type can be used anywhere after the definition in
+The `csc_cc_defaults` module type can be used anywhere after the definition in
 the file where it is defined, or can be imported into another file with:
 ```
 soong_config_module_type_import {
-    from: "device/acme/Android.bp",
-    module_types: ["acme_cc_defaults"],
+    from: "device/csc/Android.bp",
+    module_types: ["csc_cc_defaults"],
 }
 ```
 
 It can used like any other module type:
 ```
-acme_cc_defaults {
-    name: "acme_defaults",
+csc_cc_defaults {
+    name: "csc_defaults",
     cflags: ["-DGENERIC"],
     soong_config_variables: {
         board: {
@@ -504,42 +504,42 @@ acme_cc_defaults {
 }
 
 cc_library {
-    name: "libacme_foo",
-    defaults: ["acme_defaults"],
+    name: "libcsc_foo",
+    defaults: ["csc_defaults"],
     srcs: ["*.cpp"],
 }
 ```
 
-With the `BoardConfig.mk` snippet above, `libacme_foo` would build with
+With the `BoardConfig.mk` snippet above, `libcsc_foo` would build with
 `cflags: "-DGENERIC -DSOC_A -DFEATURE -DWIDTH=200"`.
 
 Alternatively, with `DefaultBoardConfig.mk`:
 
 ```
-SOONG_CONFIG_NAMESPACES += acme
-SOONG_CONFIG_acme += \
+SOONG_CONFIG_NAMESPACES += csc
+SOONG_CONFIG_csc += \
     board \
     feature \
     width \
 
-SOONG_CONFIG_acme_feature := false
+SOONG_CONFIG_csc_feature := false
 ```
 
-then `libacme_foo` would build with `cflags: "-DGENERIC -DSOC_DEFAULT -DFEATURE_DEFAULT -DSIZE=DEFAULT"`.
+then `libcsc_foo` would build with `cflags: "-DGENERIC -DSOC_DEFAULT -DFEATURE_DEFAULT -DSIZE=DEFAULT"`.
 
 Alternatively, with `DefaultBoardConfig.mk`:
 
 ```
-SOONG_CONFIG_NAMESPACES += acme
-SOONG_CONFIG_acme += \
+SOONG_CONFIG_NAMESPACES += csc
+SOONG_CONFIG_csc += \
     board \
     feature \
     width \
 
-SOONG_CONFIG_acme_board := soc_c
+SOONG_CONFIG_csc_board := soc_c
 ```
 
-then `libacme_foo` would build with `cflags: "-DGENERIC -DSOC_DEFAULT
+then `libcsc_foo` would build with `cflags: "-DGENERIC -DSOC_DEFAULT
 -DFEATURE_DEFAULT -DSIZE=DEFAULT"`.
 
 `soong_config_module_type` modules will work best when used to wrap defaults

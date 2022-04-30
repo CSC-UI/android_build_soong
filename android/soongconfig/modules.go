@@ -235,7 +235,7 @@ type SoongConfigDefinition struct {
 // contains a nil pointer to another newly constructed type that contains the affectable properties.
 // The reflect.Value will be cloned for each call to the Soong config module type's factory method.
 //
-// For example, the acme_cc_defaults example above would
+// For example, the csc_cc_defaults example above would
 // produce a reflect.Value whose type is:
 // *struct {
 //     Soong_config_variables struct {

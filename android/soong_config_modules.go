@@ -64,12 +64,12 @@ type soongConfigModuleTypeImportProperties struct {
 // For example, an Android.bp file could have:
 //
 //     soong_config_module_type_import {
-//         from: "device/acme/Android.bp",
-//         module_types: ["acme_cc_defaults"],
+//         from: "device/csc/Android.bp",
+//         module_types: ["csc_cc_defaults"],
 //     }
 //
-//     acme_cc_defaults {
-//         name: "acme_defaults",
+//     csc_cc_defaults {
+//         name: "csc_defaults",
 //         cflags: ["-DGENERIC"],
 //         soong_config_variables: {
 //             board: {
@@ -99,17 +99,17 @@ type soongConfigModuleTypeImportProperties struct {
 //     }
 //
 //     cc_library {
-//         name: "libacme_foo",
-//         defaults: ["acme_defaults"],
+//         name: "libcsc_foo",
+//         defaults: ["csc_defaults"],
 //         srcs: ["*.cpp"],
 //     }
 //
-// And device/acme/Android.bp could have:
+// And device/csc/Android.bp could have:
 //
 //     soong_config_module_type {
-//         name: "acme_cc_defaults",
+//         name: "csc_cc_defaults",
 //         module_type: "cc_defaults",
-//         config_namespace: "acme",
+//         config_namespace: "csc",
 //         variables: ["board"],
 //         bool_variables: ["feature"],
 //         value_variables: ["width"],
@@ -121,41 +121,41 @@ type soongConfigModuleTypeImportProperties struct {
 //         values: ["soc_a", "soc_b", "soc_c"],
 //     }
 //
-// If an acme BoardConfig.mk file contained:
+// If an csc BoardConfig.mk file contained:
 //
-//     SOONG_CONFIG_NAMESPACES += acme
-//     SOONG_CONFIG_acme += \
+//     SOONG_CONFIG_NAMESPACES += csc
+//     SOONG_CONFIG_csc += \
 //         board \
 //         feature \
 //
-//     SOONG_CONFIG_acme_board := soc_a
-//     SOONG_CONFIG_acme_feature := true
-//     SOONG_CONFIG_acme_width := 200
+//     SOONG_CONFIG_csc_board := soc_a
+//     SOONG_CONFIG_csc_feature := true
+//     SOONG_CONFIG_csc_width := 200
 //
-// Then libacme_foo would build with cflags "-DGENERIC -DSOC_A -DFEATURE -DWIDTH=200".
+// Then libcsc_foo would build with cflags "-DGENERIC -DSOC_A -DFEATURE -DWIDTH=200".
 //
-// Alternatively, if acme BoardConfig.mk file contained:
+// Alternatively, if csc BoardConfig.mk file contained:
 //
-//     SOONG_CONFIG_NAMESPACES += acme
-//     SOONG_CONFIG_acme += \
+//     SOONG_CONFIG_NAMESPACES += csc
+//     SOONG_CONFIG_csc += \
 //         board \
 //         feature \
 //
-//     SOONG_CONFIG_acme_feature := false
+//     SOONG_CONFIG_csc_feature := false
 //
-// Then libacme_foo would build with cflags:
+// Then libcsc_foo would build with cflags:
 //   "-DGENERIC -DSOC_DEFAULT -DFEATURE_DEFAULT -DSIZE=DEFAULT".
 //
-// Similarly, if acme BoardConfig.mk file contained:
+// Similarly, if csc BoardConfig.mk file contained:
 //
-//     SOONG_CONFIG_NAMESPACES += acme
-//     SOONG_CONFIG_acme += \
+//     SOONG_CONFIG_NAMESPACES += csc
+//     SOONG_CONFIG_csc += \
 //         board \
 //         feature \
 //
-//     SOONG_CONFIG_acme_board := soc_c
+//     SOONG_CONFIG_csc_board := soc_c
 //
-// Then libacme_foo would build with cflags:
+// Then libcsc_foo would build with cflags:
 //   "-DGENERIC -DSOC_DEFAULT -DFEATURE_DEFAULT -DSIZE=DEFAULT".
 
 func soongConfigModuleTypeImportFactory() Module {
@@ -205,9 +205,9 @@ type soongConfigModuleTypeModule struct {
 // For example, an Android.bp file could have:
 //
 //     soong_config_module_type {
-//         name: "acme_cc_defaults",
+//         name: "csc_cc_defaults",
 //         module_type: "cc_defaults",
-//         config_namespace: "acme",
+//         config_namespace: "csc",
 //         variables: ["board"],
 //         bool_variables: ["feature"],
 //         value_variables: ["width"],
@@ -219,8 +219,8 @@ type soongConfigModuleTypeModule struct {
 //         values: ["soc_a", "soc_b"],
 //     }
 //
-//     acme_cc_defaults {
-//         name: "acme_defaults",
+//     csc_cc_defaults {
+//         name: "csc_defaults",
 //         cflags: ["-DGENERIC"],
 //         soong_config_variables: {
 //             board: {
@@ -250,23 +250,23 @@ type soongConfigModuleTypeModule struct {
 //     }
 //
 //     cc_library {
-//         name: "libacme_foo",
-//         defaults: ["acme_defaults"],
+//         name: "libcsc_foo",
+//         defaults: ["csc_defaults"],
 //         srcs: ["*.cpp"],
 //     }
 //
-// If an acme BoardConfig.mk file contained:
+// If an csc BoardConfig.mk file contained:
 //
-//     SOONG_CONFIG_NAMESPACES += acme
-//     SOONG_CONFIG_acme += \
+//     SOONG_CONFIG_NAMESPACES += csc
+//     SOONG_CONFIG_csc += \
 //         board \
 //         feature \
 //
-//     SOONG_CONFIG_acme_board := soc_a
-//     SOONG_CONFIG_acme_feature := true
-//     SOONG_CONFIG_acme_width := 200
+//     SOONG_CONFIG_csc_board := soc_a
+//     SOONG_CONFIG_csc_feature := true
+//     SOONG_CONFIG_csc_width := 200
 //
-// Then libacme_foo would build with cflags "-DGENERIC -DSOC_A -DFEATURE".
+// Then libcsc_foo would build with cflags "-DGENERIC -DSOC_A -DFEATURE".
 func soongConfigModuleTypeFactory() Module {
 	module := &soongConfigModuleTypeModule{}
 
